@@ -26,19 +26,35 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-8 mb-4">
+                                <div class="col-md-9 mb-4">
                                    <div class="d-flex flex-column h-100">
                                       <div class="h-75">
-                                          <h5>{{$job->title}}</h5>
-                                          <div>
+                                          <div class="d-flex justify-content-between">
+                                              <h5 class="mb-1">{{$job->title}}</h5>
+                                              <div>
+                                                  @php
+                                                  $date = \Carbon\Carbon::create($job->date);
+                                                  $timestamps = $date->format('H:i:s');
+                                                  $day = $date->format('l');
+                                                  $month = $date->format('M');
+                                                  $day2 = $date->format('d');
+                                                  $year = $date->format('Y');
+                                                  @endphp
+                                                 <span class="text-muted">Posted at {{$timestamps . ' ' . $day}} - {{$month}} {{$day2}}, {{$year}}</span>
+                                              </div>
+                                          </div>
+                                          <div class="mb-1">
                                               <span class="text-success fw-bold">
                                                   ${{$job->salary}}
                                               </span>/month
                                           </div>
+                                          <div class="badge badge-primary rounded-pill mb-1">
+                                              {{$job->category->name}}
+                                          </div>
                                           <p>{{$job->description}}</p>
                                       </div>
                                        <div class="h-25 d-flex align-items-end justify-content-end">
-                                           <a href="{{route('jobs.edit', $job)}}" class="btn rounded-9 btn-primary btn-sm" data-mdb-ripple-init><i class="fa-solid fa-pen-to-square"></i></a>
+                                           <a href="{{route('jobs.edit', $job)}}" class="btn rounded-9 btn-primary btn-sm me-3" data-mdb-ripple-init><i class="fa-solid fa-pen-to-square"></i></a>
                                            <a href="{{route('jobs.destroy', $job)}}" class="btn rounded-9 btn-danger btn-sm" data-mdb-ripple-init><i class="fa-solid fa-x"></i></a>
                                        </div>
                                    </div>
