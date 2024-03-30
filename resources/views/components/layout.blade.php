@@ -20,6 +20,7 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css"
         rel="stylesheet"
     />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <title>Job App - Tam Nguyen</title>
 </head>
 <body>
@@ -29,9 +30,10 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white">
         <div class="container">
             <!-- Navbar brand -->
-            <a class="navbar-brand" target="_blank" href="https://mdbootstrap.com/docs/standard/">
-                <img src="https://mdbootstrap.com/img/logo/mdb-transaprent-noshadows.png" height="16" alt="" loading="lazy"
-                     style="margin-top: -3px;" />
+            <a class="navbar-brand" href="{{route('home')}}">
+                <span class="text-primary fw-bold">
+                    JobApp
+                </span>
             </a>
             <button class="navbar-toggler" type="button" data-mdb-collapse-init data-mdb-target="#navbarExample01"
                     aria-controls="navbarExample01" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,7 +45,7 @@
                         <a class="nav-link" aria-current="page" href="#intro">Jobs</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="">Categories</a>
+                        <a class="nav-link" href="{{route('categories')}}">Categories</a>
                     </li>
                 </ul>
 
@@ -62,8 +64,14 @@
     <!-- Navbar -->
 </header>
 <!--Main Navigation-->
-
+@if(session('fail'))
+    @include('partials.flashMsgFail')
+@endif
+@if(session('success'))
+    @include('partials.flashMsgSuccess')
+@endif
 {{$slot}}
+<script src="{{asset('plugins/js/script.js')}}"></script>
 <!-- MDB -->
 <script
     type="text/javascript"

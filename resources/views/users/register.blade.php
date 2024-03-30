@@ -14,7 +14,7 @@
                                </div>
                                <!-- Email input -->
                                <div class="form-outline mt-4" data-mdb-input-init>
-                                   <input type="email" id="email" name="email" value="{{old('email')}}" class="form-control" />
+                                   <input required type="email" id="email" name="email" value="{{old('email')}}" class="form-control" />
                                    <label class="form-label" for="email">Email address</label>
                                </div>
                                @error('email')
@@ -23,7 +23,7 @@
 
                                <!-- Password input -->
                                <div class="form-outline mt-4" data-mdb-input-init>
-                                   <input type="password" id="password" name="password" class="form-control" />
+                                   <input required type="password" id="password" name="password" class="form-control" minlength="6"/>
                                    <label class="form-label" for="password">Password</label>
                                </div>
                                @error('password')

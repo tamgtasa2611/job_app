@@ -6,7 +6,6 @@ use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
@@ -16,16 +15,21 @@ class UserController extends Controller
     }
 
     public function loginProcess(Request $request) {
-        $credentials = $request->validate([
+        $validated = $request->validate([
             'email' => 'required|max:255',
             'password' => 'required|min:6|max:255'
         ]);
 
-        if($credentials) {
-            if (Auth::attempt($credentials)) {
+        if($validated) {
+            $data = [
+                'email' => $request->email,
+                'password' => $request->password,
+            ];
+            if (!Auth::attempt($data)) {
+                return back()->with('fail', 'Wrong email or password!');
+            } else {
                 $request->session()->regenerate();
-
-                return Redirect::route('home');
+                return Redirect::route('home')->with('success', 'Login successfully!');
             }
         }
 
@@ -38,7 +42,7 @@ class UserController extends Controller
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
-        return Redirect::route('home');
+        return Redirect::route('home')->with('success', 'Log Out successfully!');
     }
 
     public function register() {
@@ -58,7 +62,7 @@ class UserController extends Controller
             if (Auth::attempt($credentials)) {
                 $request->session()->regenerate();
 
-                return Redirect::route('home');
+                return Redirect::route('home')->with('success', 'Sign Up successfully!');
             }
             return Redirect::back()->with('fail', 'Something went wrong!');
         } else {
