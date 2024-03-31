@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Storage;
 class JobController extends Controller
 {
     public function index(Request $request) {
+        $search = $request->search ?? '';
+        $category_id = $request->category_id ?? '';
+
         $sort = $request->sort ?? 'new';
         $sortBy = 'date';
         $direction = 'desc';
@@ -28,12 +31,15 @@ class JobController extends Controller
                 $direction = 'asc';
                 break;
         }
-        $jobs = Job::orderBy($sortBy, $direction)
+
+        $jobs = Job::where('category_id', '=', $category_id)
+            ->where('title', 'LIKE', '%' . $search . '%')
+            ->orderBy($sortBy, $direction)
             ->paginate(2)
             ->withQueryString();
         $categories = Category::all();
 
-        return view('jobs.index', compact('jobs', 'categories', 'sort'));
+        return view('jobs.index', compact('jobs', 'categories', 'sort', 'search', 'category_id'));
     }
 
     public function create() {
