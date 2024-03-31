@@ -22,8 +22,13 @@
                             <div class="col-12 col-lg-auto">
                                 <select name="category_id" id="category_id" name="category_id"
                                         class="form-select" onchange="this.form.submit()">
+                                    <option value="0" {{count($category_id) > 1 ? 'selected' : ''}}>All</option>
                                    @foreach($categories as $category)
-                                        <option value="{{$category->id}}" {{$category->id == $category_id ? 'selected' : ''}}>
+                                        <option value="{{$category->id}}"
+                                            @if(count($category_id) == 1 )
+                                                {{$category->id == $category_id[0] ? 'selected' : ''}}
+                                            @endif
+                                        >
                                             {{$category->name}}
                                         </option>
                                    @endforeach

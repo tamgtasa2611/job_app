@@ -20,4 +20,5 @@ $(document).ready(function () {
             $("#show_hide_password i").addClass("bi-eye");
         }
     });
+
 });

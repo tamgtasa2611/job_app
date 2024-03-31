@@ -14,7 +14,15 @@ class JobController extends Controller
 {
     public function index(Request $request) {
         $search = $request->search ?? '';
-        $category_id = $request->category_id ?? '';
+        $category_id = [];
+        foreach(Category::all()->toArray() as $category) {
+            $category_id[] = $category['id'];
+        }
+        if($request->category_id) {
+            $category_id = [
+                $request->category_id
+            ];
+        }
 
         $sort = $request->sort ?? 'new';
         $sortBy = 'date';
@@ -32,7 +40,7 @@ class JobController extends Controller
                 break;
         }
 
-        $jobs = Job::where('category_id', '=', $category_id)
+        $jobs = Job::whereIn('category_id', $category_id)
             ->where('title', 'LIKE', '%' . $search . '%')
             ->orderBy($sortBy, $direction)
             ->paginate(2)
