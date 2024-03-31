@@ -12,10 +12,28 @@ use Illuminate\Support\Facades\Storage;
 
 class JobController extends Controller
 {
-    public function index() {
-        $jobs = Job::paginate(2);
+    public function index(Request $request) {
+        $sort = $request->sort ?? 'new';
+        $sortBy = 'date';
+        $direction = 'desc';
+        switch ($sort) {
+            case 'old':
+                $direction = 'asc';
+                break;
+            case 'high':
+                $sortBy = 'salary';
+                break;
+            case 'low':
+                $sortBy = 'salary';
+                $direction = 'asc';
+                break;
+        }
+        $jobs = Job::orderBy($sortBy, $direction)
+            ->paginate(2)
+            ->withQueryString();
         $categories = Category::all();
-        return view('jobs.index', compact('jobs', 'categories'));
+
+        return view('jobs.index', compact('jobs', 'categories', 'sort'));
     }
 
     public function create() {

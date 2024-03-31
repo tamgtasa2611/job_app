@@ -4,9 +4,21 @@
         <div class="container">
             <!--Section: Content-->
             <section class="text-center text-md-start">
-                <div class="d-flex mb-5 align-items-center">
-                    <h4 class="m-0"><strong>Job list</strong></h4>
-                    <a href="{{route('jobs.add')}}" class="ms-3 btn btn-primary rounded-9">Add</a>
+                <div class="d-flex mb-5 align-items-center justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <h4 class="m-0"><strong>Job list</strong></h4>
+                        <a href="{{route('jobs.add')}}" class="ms-3 btn btn-primary rounded-9">Add</a>
+                    </div>
+                    <div>
+                        <form method="GET" class="m-0">
+                            <select name="sort" id="sort" name="sort" class="form-select" onchange="this.form.submit()">
+                                <option value="new" {{$sort == 'new' ? 'selected' : ''}}>Newest</option>
+                                <option value="old" {{$sort == 'old' ? 'selected' : ''}}>Oldest</option>
+                                <option value="high" {{$sort == 'high' ? 'selected' : ''}}>Salary: High to low</option>
+                                <option value="low" {{$sort == 'low' ? 'selected' : ''}}>Salary: Low to High</option>
+                            </select>
+                        </form>
+                    </div>
                 </div>
                 @if(count($jobs) != 0)
                     <!-- Post -->
