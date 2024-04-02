@@ -21,8 +21,11 @@
                                 @enderror
 
                                 <!-- Password input -->
-                                <div class="form-outline mt-4" data-mdb-input-init>
+                                <div class="form-outline mt-4 input-group" data-mdb-input-init id="show_hide_password">
                                     <input required type="password" id="password" name="password" class="form-control" minlength="6" />
+                                    <a href="#!" class="input-group-text">
+                                        <i class="fas fa-eye-slash" aria-hidden="true"></i>
+                                    </a>
                                     <label class="form-label" for="password">Password</label>
                                 </div>
                                 @error('password')
